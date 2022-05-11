@@ -16,6 +16,18 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/data', (req, res) => {
+    conexion.query('SELECT * FROM users', (error, results) => {
+        if (error) {
+            throw error;
+        } else {
+            data = JSON.stringify(results)
+            res.send(data)
+        }
+    })
+})
+
+
 //CREAR REGISTROS
 router.get('/create', (req, res) => {
     res.render('create.ejs')
@@ -36,10 +48,21 @@ router.get('/edit/:id', (req, res) => {
 
 //GUARDAR, desde crud.js
 router.post('/save', crud.save)
+
 //ACTUALIZAR
 router.post('/update', crud.update)
+
 //BORRAR 
-router.post('/delete')
+router.get('/delete/:id', (req, res) =>{
+    const id = req.params.id;
+    conexion.query('DELETE FROM users WHERE id = ?', [id], (error, results) => {
+        if (error) {
+            throw error;
+        } else {
+            res.redirect('/')
+        }
+    })
+})
 
 
 module.exports = router;

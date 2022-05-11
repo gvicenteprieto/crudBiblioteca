@@ -24,7 +24,7 @@ exports.save = (req, res) => {
 exports.update = (req, res) => {
     const id = req.body.id;
     const user = req.body.user;
-    const rol = req.body.id;
+    const rol = req.body.rol;
     //se hace la conexión y se pasan los valores en un array con objetos
     conexion.query('UPDATE users SET ? WHERE id = ?', [{ user:user, rol:rol }, id], (error, results) => {
         if (error) {
